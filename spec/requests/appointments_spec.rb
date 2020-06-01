@@ -81,7 +81,7 @@ RSpec.describe 'Appointments API' do
       end
 
       it 'returns a failure message' do
-        expect(response.body).to match(/Validation failed: Name can't be blank/)
+        expect(response.body).to match(/Validation failed: Date can't be blank, Location can't be blank/)
       end
     end
   end
@@ -92,18 +92,18 @@ RSpec.describe 'Appointments API' do
 
     before { put "/tutors/#{tutor_id}/appointments/#{id}", params: valid_attributes }
 
-    context 'when item exists' do
+    context 'when appointment exists' do
       it 'returns status 204' do
         expect(response).to have_http_status(204)
       end
 
-      it 'updates the item' do
-        updated_item = Item.find(id)
-        expect(updated_item).to match(/Nuevo Mexico/)
+      it 'updates the appointment' do
+        updated_appointment = Appointment.find(id)
+        expect(updated_appointment.location).to match(/Nuevo Mexico/)
       end
     end
 
-    context 'when the item does not exist' do
+    context 'when the appointment does not exist' do
       let(:id) { 45 }
 
       it 'returns status 404' do
