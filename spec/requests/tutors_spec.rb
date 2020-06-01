@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative '../rails_helper'
 
 RSpec.describe 'Tutors API', type: :request do
@@ -20,8 +22,8 @@ RSpec.describe 'Tutors API', type: :request do
     end
   end
 
-  describe 'GET (tutors/:id' do
-    before { get "/tutors(#{tutor_id}" }
+  describe 'GET tutors/:id' do
+    before { get "/tutors/#{tutor_id}" }
 
     context 'when the tutor does not exist' do
       let(:tutor_id) { 45 }
@@ -31,7 +33,7 @@ RSpec.describe 'Tutors API', type: :request do
       end
 
       it 'returns a not found message' do
-        expect(response).to match(/The tutor doesn't exist/)
+        expect(response.body).to match(/Couldn't find Tutor/)
       end
     end
   end
