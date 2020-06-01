@@ -88,7 +88,7 @@ RSpec.describe 'Appointments API' do
 
   describe 'PUT /tutors/:tutor_id/appointments/:id' do
     let(:location) { 'Nuevo Mexico' }
-    let(:valid_attributes) { { location: location } }
+    let(:valid_attributes) { { location: location, canceled: true } }
 
     before { put "/tutors/#{tutor_id}/appointments/#{id}", params: valid_attributes }
 

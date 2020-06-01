@@ -41,6 +41,6 @@ class AppointmentsController < ApplicationController
   end
 
   def appointment_params
-    params.permit(:date, :location)
+    params.permit(:date, :location, :canceled)
   end
 end
