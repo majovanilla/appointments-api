@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_01_014847) do
+ActiveRecord::Schema.define(version: 2020_06_01_041405) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,7 +19,7 @@ ActiveRecord::Schema.define(version: 2020_06_01_014847) do
     t.datetime "date"
     t.string "location"
     t.bigint "tutor_id", null: false
-    t.boolean "canceled"
+    t.boolean "canceled", default: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["tutor_id"], name: "index_appointments_on_tutor_id"
