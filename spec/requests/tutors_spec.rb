@@ -3,11 +3,13 @@
 require_relative '../rails_helper'
 
 RSpec.describe 'Tutors API', type: :request do
+  let(:user) { create(:user) }
   let!(:tutors) { create_list(:tutor, 5) }
   let(:tutor_id) { tutors.first.id }
+  let(:headers) { valid_headers }
 
   describe 'GET /tutors' do
-    before { get '/tutors' }
+    before { get '/tutors', params: {}, headers: headers }
 
     it 'returns tutors' do
       expect(json).not_to be_empty
@@ -23,7 +25,7 @@ RSpec.describe 'Tutors API', type: :request do
   end
 
   describe 'GET tutors/:id' do
-    before { get "/tutors/#{tutor_id}" }
+    before { get "/tutors/#{tutor_id}", params: {}, headers: headers }
 
     context 'when the tutor does not exist' do
       let(:tutor_id) { 45 }
