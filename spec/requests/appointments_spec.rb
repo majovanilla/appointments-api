@@ -3,13 +3,15 @@
 require 'rails_helper'
 
 RSpec.describe 'Appointments API' do
+  let(:user) { create(:user) }
   let!(:tutor) { create(:tutor) }
   let!(:appointment) { create_list(:appointment, 5, tutor_id: tutor.id) }
   let(:tutor_id) { tutor.id }
   let(:id) { appointment.first.id }
+  let(:headers) { valid_headers }
 
   describe 'GET /tutors/:tutor_id/appointments' do
-    before { get "/tutors/#{tutor_id}/appointments" }
+    before { get "/tutors/#{tutor_id}/appointments", params: {}, headers: headers }
 
     context 'when tutor exists' do
       it 'returns status 200' do
@@ -35,7 +37,7 @@ RSpec.describe 'Appointments API' do
   end
 
   describe 'GET /tutors/:tutor_id/appointments/:id' do
-    before { get "/tutors/#{tutor_id}/appointments/#{id}" }
+    before { get "/tutors/#{tutor_id}/appointments/#{id}", params: {}, headers: headers }
 
     context 'when appointment exists' do
       it 'returns a status 200' do
@@ -60,13 +62,13 @@ RSpec.describe 'Appointments API' do
     end
   end
 
-  describe 'PUT tutors/:tutor_id/appointments' do
+  describe 'POST tutors/:tutor_id/appointments' do
     let(:date) { Faker::Time.between(from: DateTime.now - 1, to: DateTime.now, format: :default) }
     let(:location) { Faker::Lorem.word }
     let(:valid_attributes) { { date: date, location: location } }
 
     context 'when request attributes are valid' do
-      before { post "/tutors/#{tutor_id}/appointments", params: valid_attributes }
+      before { post "/tutors/#{tutor_id}/appointments", params: valid_attributes, headers: headers }
 
       it 'returns status 201' do
         expect(response).to have_http_status(201)
@@ -90,7 +92,7 @@ RSpec.describe 'Appointments API' do
     let(:location) { 'Nuevo Mexico' }
     let(:valid_attributes) { { location: location, canceled: true } }
 
-    before { put "/tutors/#{tutor_id}/appointments/#{id}", params: valid_attributes }
+    before { put "/tutors/#{tutor_id}/appointments/#{id}", params: valid_attributes, headers: headers }
 
     context 'when appointment exists' do
       it 'returns status 204' do
@@ -117,7 +119,7 @@ RSpec.describe 'Appointments API' do
   end
 
   describe 'DELETE /tutors/:tutor_id/appointments/:id' do
-    before { delete "/tutors/#{tutor_id}/appointments/#{id}" }
+    before { delete "/tutors/#{tutor_id}/appointments/#{id}", params: {}, headers: headers }
 
     it 'returns status 204' do
       expect(response).to have_http_status(204)
