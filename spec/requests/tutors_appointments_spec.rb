@@ -6,7 +6,6 @@ RSpec.describe 'Appointments API' do
   let(:user) { create(:user) }
   let!(:tutor) { create(:tutor) }
   let(:tutor_id) { tutor.id }
-  let(:id) { appointment.first.id }
   let(:headers) { valid_headers }
 
   describe 'GET /tutors/:tutor_id' do
@@ -18,7 +17,8 @@ RSpec.describe 'Appointments API' do
       end
 
       it 'returns all tutors\' details as json' do
-        expect(response.body).to match(/something/)
+        tutor_json = JSON.parse(response.body)
+        expect(tutor_json.length).to eq(7)
       end
     end
 
