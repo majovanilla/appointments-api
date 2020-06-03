@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Tutor, type: :model do
@@ -6,4 +8,5 @@ RSpec.describe Tutor, type: :model do
   it { should validate_presence_of(:name) }
   it { should validate_presence_of(:subject) }
   it { should validate_presence_of(:about) }
+  it { should validate_uniqueness_of(:email) }
 end
