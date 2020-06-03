@@ -4,11 +4,11 @@ class AppointmentsController < ApplicationController
   include Response
   include ExceptionHandler
 
-  before_action :set_tutor
-  before_action :set_tutor_appointment, only: %i[show update destroy]
+  # before_action :set_tutor
+  before_action :set_appointment, only: %i[show update destroy]
 
   def index
-    json_response(@tutor.appointments)
+    json_response(@current_user.appointments)
   end
 
   def show
@@ -16,8 +16,8 @@ class AppointmentsController < ApplicationController
   end
 
   def create
-    @tutor.appointments.create!(appointment_params)
-    json_response(@tutor.appointments, :created)
+    @current_user.appointments.create!(appointment_params)
+    json_response(@current_user.appointments, :created)
   end
 
   def update
@@ -32,15 +32,15 @@ class AppointmentsController < ApplicationController
 
   private
 
-  def set_tutor
-    @tutor = Tutor.find(params[:tutor_id])
-  end
+  # def set_tutor
+  #   @tutor = Tutor.find(params[:tutor_id])
+  # end
 
-  def set_tutor_appointment
-    @appointment = @tutor.appointments.find_by!(id: params[:id]) if @tutor
+  def set_appointment
+    @appointment = @current_user.appointments.find_by!(id: params[:id]) if @current_user
   end
 
   def appointment_params
-    params.permit(:date, :location, :canceled)
+    params.permit(:date, :location, :canceled, :tutor_id)
   end
 end

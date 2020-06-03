@@ -11,7 +11,7 @@ class TutorsController < ApplicationController
   end
 
   def index
-    @tutors = Tutor.includes(:appointments)
+    @tutors = Tutor.all
     json_response(@tutors)
   end
 
