@@ -9,11 +9,12 @@ RSpec.describe 'Appointments API' do
   let(:user_id) { user.id }
   let(:id) { appointment.first.id }
   let(:headers) { valid_headers }
+  let(:no_auth) { valid_headers.except('Authorization') }
 
-  describe 'GET /users/:user_id/appointments' do
-    before { get "/users/#{user_id}/appointments", params: {}, headers: headers }
+  describe 'GET /appointments' do
+    context 'when user is logged in' do
+      before { get '/appointments', params: {}, headers: headers }
 
-    context 'when user exists' do
       it 'returns status 200' do
         expect(response).to have_http_status(200)
       end
@@ -23,21 +24,21 @@ RSpec.describe 'Appointments API' do
       end
     end
 
-    context 'when user does not exist' do
-      let(:user_id) { 0 }
+    context 'when user does is not logged in' do
+      before { get '/appointments', params: {}, headers: no_auth }
 
-      it 'returns status 404' do
-        expect(response).to have_http_status(404)
+      it 'returns status 422' do
+        expect(response).to have_http_status(422)
       end
 
       it 'returns a not found message' do
-        expect(response.body).to match(/Couldn't find User/)
+        expect(response.body).to match(/Missing token/)
       end
     end
   end
 
-  describe 'GET /users/:user_id/appointments/:id' do
-    before { get "/users/#{user_id}/appointments/#{id}", params: {}, headers: headers }
+  describe 'GET /appointments/:id' do
+    before { get "/appointments/#{id}", params: {}, headers: headers }
 
     context 'when appointment exists' do
       it 'returns a status 200' do
@@ -62,13 +63,13 @@ RSpec.describe 'Appointments API' do
     end
   end
 
-  describe 'POST users/:user_id/appointments' do
+  describe 'POST /appointments' do
     let(:date) { '2020-05-05 14:15:23' }
     let(:location) { Faker::Lorem.word }
-    let(:valid_attributes) { { date: date, location: location }.to_json }
+    let(:valid_attributes) { { date: date, location: location, tutor_id: tutor.id }.to_json }
 
     context 'when request attributes are valid' do
-      before { post "/users/#{user_id}/appointments", params: valid_attributes, headers: headers }
+      before { post '/appointments', params: valid_attributes, headers: headers }
 
       it 'returns status 201' do
         expect(response).to have_http_status(201)
@@ -76,23 +77,23 @@ RSpec.describe 'Appointments API' do
     end
 
     context 'when an invalid request' do
-      before { post "/users/#{user_id}/appointments", params: {}, headers: headers }
+      before { post '/appointments', params: {}, headers: headers }
 
       it 'returns status 422' do
         expect(response).to have_http_status(422)
       end
 
       it 'returns a failure message' do
-        expect(response.body).to match(/Validation failed: Date can't be blank, Location can't be blank/)
+        expect(response.body).to match(/Validation failed: Tutor must exist, Date can't be blank, Location can't be blank/)
       end
     end
   end
 
-  describe 'PUT /users/:user_id/appointments/:id' do
+  describe 'PUT /appointments/:id' do
     let(:location) { 'Nuevo Mexico' }
     let(:valid_attributes) { { location: location, canceled: true }.to_json }
 
-    before { put "/users/#{user_id}/appointments/#{id}", params: valid_attributes, headers: headers }
+    before { put "/appointments/#{id}", params: valid_attributes, headers: headers }
 
     context 'when appointment exists' do
       it 'returns status 204' do
@@ -118,8 +119,8 @@ RSpec.describe 'Appointments API' do
     end
   end
 
-  describe 'DELETE /users/:user_id/appointments/:id' do
-    before { delete "/users/#{user_id}/appointments/#{id}", params: {}, headers: headers }
+  describe 'DELETE /appointments/:id' do
+    before { delete "/appointments/#{id}", params: {}, headers: headers }
 
     it 'returns status 204' do
       expect(response).to have_http_status(204)
