@@ -35,37 +35,4 @@ RSpec.describe 'Authentication', type: :request do
       end
     end
   end
-
-  describe 'POST /signup' do
-    let!(:user) { create(:user) }
-    let(:headers) { valid_headers.except('Authorization') }
-    let(:valid_credentials) do
-      {
-        name: Faker::Name.name,
-        email: Faker::Internet.email,
-        password: Faker::Internet.password
-      }.to_json
-    end
-    let(:invalid_credentials) { {} }
-
-    context 'When request is valid' do
-      before { post '/signup', params: valid_credentials, headers: headers }
-
-      it 'returns status 201' do
-        expect(response).to have_http_status(201)
-      end
-
-      it 'returns an authentication token' do
-        expect(json['auth_token']).not_to be_nil
-      end
-    end
-
-    context 'When request is invalid' do
-      before { post '/signup', params: invalid_credentials, headers: headers }
-
-      it 'returns a failure message' do
-        expect(json['message']).to match(/Validation failed/)
-      end
-    end
-  end
 end
