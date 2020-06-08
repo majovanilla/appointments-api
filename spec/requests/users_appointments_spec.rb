@@ -63,13 +63,14 @@ RSpec.describe 'Appointments API' do
     end
   end
 
-  describe 'POST /appointments' do
-    let(:date) { '2020-05-05 14:15:23' }
+  describe 'POST /appointments/new' do
+    let(:date) { '05 may 2020' }
+    let(:time) { '18:00:00' }
     let(:location) { Faker::Lorem.word }
-    let(:valid_attributes) { { date: date, location: location, tutor_id: tutor.id }.to_json }
+    let(:valid_attributes) { { date: date, time: time, location: location, tutor_id: tutor.id }.to_json }
 
     context 'when request attributes are valid' do
-      before { post '/appointments', params: valid_attributes, headers: headers }
+      before { post '/appointments/new', params: valid_attributes, headers: headers }
 
       it 'returns status 201' do
         expect(response).to have_http_status(201)
@@ -77,7 +78,7 @@ RSpec.describe 'Appointments API' do
     end
 
     context 'when an invalid request' do
-      before { post '/appointments', params: {}, headers: headers }
+      before { post '/appointments/new', params: {}, headers: headers }
 
       it 'returns status 422' do
         expect(response).to have_http_status(422)

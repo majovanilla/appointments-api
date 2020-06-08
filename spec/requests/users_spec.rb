@@ -45,7 +45,6 @@ RSpec.describe 'Users API', type: :request do
     let(:headers) { valid_headers.except('Authorization') }
     let(:valid_credentials) do
       {
-        name: user.name,
         email: user.email,
         password: user.password
       }.to_json
