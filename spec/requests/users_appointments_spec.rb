@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe 'Appointments API' do
   let(:user) { create(:user) }
   let!(:tutor) { create(:tutor) }
-  let!(:appointment) { create_list(:appointment, 5, tutor_id: tutor.id, user_id: user.id) }
+  let!(:appointment) { create_list(:appointment, 5, tutor_id: tutor.id, user_id: user.id, time: '18:00:00') }
   let(:user_id) { user.id }
   let(:id) { appointment.first.id }
   let(:headers) { valid_headers }

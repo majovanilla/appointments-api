@@ -32,10 +32,6 @@ class AppointmentsController < ApplicationController
 
   private
 
-  # def set_tutor
-  #   @tutor = Tutor.find(params[:tutor_id])
-  # end
-
   def set_appointment
     @appointment = @current_user.appointments.find_by!(id: params[:id]) if @current_user
   end
