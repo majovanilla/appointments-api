@@ -26,6 +26,7 @@ module AppointmentsApi
     # Initialize configuration defaults for originally generated Rails version.
     # config.load_defaults 6.0
     # config.autoload_paths << Rails.root.join('lib')
+    config.enable_dependency_loading = true
     config.eager_load_paths << Rails.root.join('lib')
 
     # Settings in config/environments/* take precedence over those specified here.
