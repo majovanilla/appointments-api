@@ -4,8 +4,8 @@ require 'jwt'
 
 class JsonWebToken
   # secret to encode and decode token
-  HMAC_SECRET = ENV['SECRET_KEY_BASE']
-  # HMAC_SECRET = Rails.application.secrets.secret_key_base
+  # HMAC_SECRET = ENV['SECRET_KEY_BASE']
+  HMAC_SECRET = Rails.application.secrets.secret_key_base
 
   def self.encode(payload, exp = 24.hours.from_now)
     # set expiry to 24 hours from creation time
