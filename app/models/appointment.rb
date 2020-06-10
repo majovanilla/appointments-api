@@ -4,5 +4,5 @@ class Appointment < ApplicationRecord
   belongs_to :tutor
   belongs_to :user
 
-  validates_presence_of :date, :location, :time
+  validates_presence_of :date, :location, :time, :tutor_id
 end

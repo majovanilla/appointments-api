@@ -24,7 +24,7 @@ RSpec.describe 'Appointments API' do
       end
     end
 
-    context 'when user does is not logged in' do
+    context 'when user is not logged in' do
       before { get '/appointments', params: {}, headers: no_auth }
 
       it 'returns status 422' do
