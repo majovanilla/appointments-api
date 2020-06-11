@@ -6,5 +6,7 @@ class HomeController < ApplicationController
 
   skip_before_action :authorize_request, only: :index
 
-  def index; end
+  def index
+    render json: { status: 'it\'s working' }
+  end
 end
