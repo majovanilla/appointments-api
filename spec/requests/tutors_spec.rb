@@ -4,7 +4,7 @@ require_relative '../rails_helper'
 
 RSpec.describe 'Tutors API', type: :request do
   let(:user) { create(:user) }
-  let!(:tutors) { create_list(:tutor, 5) }
+  let!(:tutors) { create_list(:tutor, 5, rate: '$145/hr', experience: '5 years', img: 'http://image.com') }
   let(:tutor_id) { tutors.first.id }
   let(:headers) { valid_headers }
 
