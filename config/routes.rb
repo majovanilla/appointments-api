@@ -7,7 +7,7 @@ Rails.application.routes.draw do
 
   resources :appointments, only: %i[index show update destroy]
 
-  get '/', to: 'tutors#index'
+  get '/', to: 'home#index'
   post 'auth/login', to: 'authentication#authenticate'
   post 'signup', to: 'users#create'
   post 'appointments/new', to: 'appointments#create'
