@@ -5,7 +5,13 @@ require 'rails_helper'
 RSpec.describe 'Appointments API' do
   let(:user) { create(:user) }
   let!(:tutor) { create(:tutor, rate: '$145/hr', experience: '5 years', img: 'http://image.com') }
-  let!(:appointment) { create_list(:appointment, 5, tutor_id: tutor.id, user_id: user.id, location: 'Mexico city', date: Date.tomorrow) }
+  let!(:appointment) do
+    create_list(:appointment, 5,
+                tutor_id: tutor.id,
+                user_id: user.id,
+                location: 'Mexico city',
+                date: Date.tomorrow)
+  end
   let(:user_id) { user.id }
   let(:id) { appointment.first.id }
   let(:headers) { valid_headers }
@@ -84,7 +90,9 @@ RSpec.describe 'Appointments API' do
       end
 
       it 'returns a failure message' do
-        expect(response.body).to match(/Validation failed: Tutor must exist, Date can't be blank, Location can't be blank/)
+        expect(response.body).to match(
+          /Validation failed: Tutor must exist,Date can't be blank, Location can't be blank/
+        )
       end
     end
   end
