@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require_relative '../rails_helper'
 
 RSpec.describe 'Tutors API', type: :request do

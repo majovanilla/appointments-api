@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 class AppointmentsController < ApplicationController
   include Response
   include ExceptionHandler
