@@ -8,7 +8,7 @@ class AppointmentsController < ApplicationController
   before_action :set_appointment, only: %i[show update destroy]
 
   def index
-    json_response(@current_user.appointments.upcoming(Time.zone.now))
+    json_response(@current_user.appointments.ordered)
   end
 
   def show
