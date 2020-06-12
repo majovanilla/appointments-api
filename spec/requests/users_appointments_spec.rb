@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe 'Appointments API' do
   let(:user) { create(:user) }
   let!(:tutor) { create(:tutor, rate: '$145/hr', experience: '5 years', img: 'http://image.com') }
-  let!(:appointment) { create_list(:appointment, 5, tutor_id: tutor.id, user_id: user.id, location: 'Mexico city', date: Date.tomorrow, time: Time.zone.now) }
+  let!(:appointment) { create_list(:appointment, 5, tutor_id: tutor.id, user_id: user.id, location: 'Mexico city', date: Date.tomorrow) }
   let(:user_id) { user.id }
   let(:id) { appointment.first.id }
   let(:headers) { valid_headers }
@@ -65,9 +65,8 @@ RSpec.describe 'Appointments API' do
 
   describe 'POST /appointments/new' do
     let(:date) { Time.zone.now }
-    let(:time) { Time.zone.now }
     let(:location) { Faker::Lorem.word }
-    let(:valid_attributes) { { date: date, time: time, location: location, tutor_id: tutor.id }.to_json }
+    let(:valid_attributes) { { date: date, location: location, tutor_id: tutor.id }.to_json }
 
     context 'when request attributes are valid' do
       before { post '/appointments/new', params: valid_attributes, headers: headers }
