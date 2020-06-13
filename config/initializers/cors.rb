@@ -9,10 +9,11 @@
 
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
-    origins 'https://appointments-majo-vanilla.netlify.app/'
+    origins '*'
 
     resource '*',
              headers: :any,
              methods: %i[get post put patch delete options head]
+             Access-Control-Allow-Credentials: true
   end
 end
