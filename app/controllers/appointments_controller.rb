@@ -1,8 +1,9 @@
+# frozen_string_literal: true
+
 class AppointmentsController < ApplicationController
   include Response
   include ExceptionHandler
 
-  # before_action :set_tutor
   before_action :set_appointment, only: %i[show update destroy]
 
   def index

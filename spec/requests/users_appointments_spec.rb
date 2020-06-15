@@ -1,15 +1,11 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe 'Appointments API' do
   let(:user) { create(:user) }
   let!(:tutor) { create(:tutor, rate: '$145/hr', experience: '5 years', img: 'http://image.com') }
-  let!(:appointment) do
-    create_list(:appointment, 5,
-                tutor_id: tutor.id,
-                user_id: user.id,
-                location: 'Mexico city',
-                date: Date.tomorrow)
-  end
+  let!(:appointment) { create_list(:appointment, 5, tutor_id: tutor.id, user_id: user.id, location: 'Mexico city', date: Date.tomorrow) }
   let(:user_id) { user.id }
   let(:id) { appointment.first.id }
   let(:headers) { valid_headers }
