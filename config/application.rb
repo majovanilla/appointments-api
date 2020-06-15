@@ -23,7 +23,7 @@ Bundler.require(*Rails.groups)
 
 module AppointmentsApi
   class Application < Rails::Application
-    config.hosts << 'appointments-api-majovanilla.herokuapp.com'
+    # config.hosts << 'appointments-api-majovanilla.herokuapp.com'
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 6.0
     # config.autoload_paths << Rails.root.join('lib')

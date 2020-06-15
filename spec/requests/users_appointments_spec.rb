@@ -85,7 +85,7 @@ RSpec.describe 'Appointments API' do
 
       it 'returns a failure message' do
         expect(response.body).to match(
-          /Validation failed: Tutor must exist,Date can't be blank, Location can't be blank/
+          /Validation failed: Tutor must exist, Date can't be blank, Location can't be blank/
         )
       end
     end
